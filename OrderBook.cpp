@@ -1,57 +1,45 @@
 #include "OrderBook.h"
 
-
 double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
 {
-    std::cout << "______________________" << std::endl;
-
-    long int firstTimestamp = orders.front().timestamp;
-    long int finalTimestamp = orders.back().timestamp;
-
-    //Fill map first
+    //Fill resting order map first
     for(std::vector<trading::LimitOrder>::iterator it = orders.begin(); it != orders.end(); ++it)
     {
         if(it->type == add)
         {
-            orderMap_[it->id] = &(*it); //Pointer to the elements
-        }
-        else
-        {
-            //Assume that each cancel order has been previously booked.
-            LimitOrder* addOrder = orderMap_[it->id];
-            //std::cout << it->timestamp - addOrder->timestamp << " " << (*addOrder).price << std::endl;
+            restingOrderMap_[it->id] = &(*it);
         }
     }
 
-    //std::cout << "______________________" << std::endl;
-
-    //Let's go. Iterate over all orders
-    std::map<long int, double> priceMap;
+    //Fill Map<Timestamp, Highest Resting Price>
+    std::map<long int, double> highestPriceMap;
     for(std::vector<trading::LimitOrder>::iterator it = orders.begin(); it != orders.end(); ++it)
     {
+        //Order has been cancelled. Remove it from the resting orders map.
         if(it->type == cancel)
         {
-            orderMap_.erase(it->id);
+            restingOrderMap_.erase(it->id);
         }
+
         long int currentTimestamp = it->timestamp;
-        double highestPrice = getHighestPriceOfLimitOrders(currentTimestamp); //highest order price up to now.
-        priceMap[currentTimestamp] = highestPrice;
+        highestPriceMap[currentTimestamp] = getHighestPriceOfLimitOrders(currentTimestamp); //highest order price up to now.
     }
 
     double twap = 0;
-    for(std::map<long int, double>::iterator it = priceMap.begin(); it != priceMap.end(); it++)
+    for(std::map<long int, double>::iterator it = highestPriceMap.begin(); it != highestPriceMap.end(); it++)
     {
         long int lastTimestamp = it->first;
-        if(it != priceMap.end())
+        if(it != highestPriceMap.end())
         {
-            it++;
-            long newVal = it->first-lastTimestamp;
-            it--;
+            //std::next(it, 1); Can be done with C++11 with next!
+            it++; long newVal = it->first-lastTimestamp; it--;
             twap += it->second * newVal;
         }
-        //std::cout << " " << it->first << " " << it->second << std::endl;
     }
 
+    //The timestamps are monotonically increasing.
+    long int firstTimestamp = orders.front().timestamp;
+    long int finalTimestamp = orders.back().timestamp;
     twap /= (finalTimestamp - firstTimestamp);
     return twap;
 }
@@ -59,7 +47,7 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
 double trading::OrderBook::getHighestPriceOfLimitOrders(long int maxTimestamp)
 {
     double highestPrice = 0;
-    for (std::map<trading::LimitOrder::Id, trading::LimitOrder*>::iterator it = orderMap_.begin(); it != orderMap_.end(); it++)
+    for (std::map<std::string, trading::LimitOrder*>::iterator it = restingOrderMap_.begin(); it != restingOrderMap_.end(); it++)
     {
         double currentPrice = it->second->price;
         if(currentPrice > highestPrice && it->second->timestamp <= maxTimestamp)

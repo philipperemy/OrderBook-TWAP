@@ -8,10 +8,9 @@
 
 void trading::MarketDataProvider::readMarketDataFile(const std::string& filename)
 {
-	messages_.clear();
 	filename_ = filename;
 	messages_ = readFile(filename_);
-	std::cout << "MarketDataProvider is initialized with " << messages_.size() << " messages" << std::endl;
+	std::cout << messages_.size() << " orders in " << filename_ << std::endl;
 	cur_ = trading::MarketDataProvider::messages_.begin();
 }
 

@@ -13,7 +13,7 @@ namespace trading
             double computeTWAP(std::vector<trading::LimitOrder> orders);
         private:
             double getHighestPriceOfLimitOrders(long int maxTimestamp);
-            std::map<trading::LimitOrder::Id, trading::LimitOrder*> orderMap_;
+            std::map<std::string, trading::LimitOrder*> restingOrderMap_;
     };
 }
 

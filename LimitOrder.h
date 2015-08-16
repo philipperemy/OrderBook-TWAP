@@ -5,37 +5,24 @@
 #include <string>
 #include <sstream>
 
-namespace trading {
-
-enum OrderType {add, cancel};
-
-// Market Order
-struct LimitOrder
+namespace trading
 {
-	std::string toString() const;
+    enum OrderType
+    {
+        add,
+        cancel
+    };
 
-	typedef unsigned long int Price;
-	typedef std::string Id;
+    // Limit Order
+    struct LimitOrder
+    {
+        std::string         id;
+        unsigned long int   timestamp; //ms
+        OrderType           type;
+        double              price; //optional
 
-	OrderType type;
-	unsigned long int timestamp; //ms
-	Id id;
-	Price price;
+    };
 
-};
-
-}
-
-inline std::string trading::LimitOrder::toString() const
-{
-	std::stringstream oss;
-
-	if (type == add) {
-		oss << "AddOrder: ts = " << timestamp << " id = " << id << " " << " price = " << price;
-	} else {
-		oss << "ReduceOrder: ts = " << timestamp << " id = " << id;
-	}
-	return oss.str();
 }
 
 #endif /* MARKETORDER_H_ */

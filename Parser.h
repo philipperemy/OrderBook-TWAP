@@ -19,15 +19,12 @@ namespace trading
     };
 }
 
-
 inline trading::LimitOrder trading::Parser::parse(const std::string& msg)
 {
 	std::vector<std::string> fields = tokenize(msg, ' ');
-
 	LimitOrder order;
 	order.timestamp = atol(fields.at(0).c_str());
     order.id = fields.at(2);
-
     std::string orderType = fields.at(1);
 	if (orderType.compare("I") == 0)
     {
@@ -44,7 +41,6 @@ inline trading::LimitOrder trading::Parser::parse(const std::string& msg)
     {
         throw std::domain_error("Parser: type is incorrect. Should be I or E.");
     }
-
 	return order;
 }
 

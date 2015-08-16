@@ -6,10 +6,10 @@
 #include <fstream>
 #include <sstream>
 
-namespace trading {
+namespace trading
+{
 
     std::vector<std::string> readFile(const std::string& filename);
-
     std::vector<std::string> tokenize(const std::string& str, const char& delimiter);
 
 }
