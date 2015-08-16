@@ -21,7 +21,7 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
     std::map<long int, double> highestPriceMap;
     for(std::vector<trading::LimitOrder>::iterator it = orders.begin(); it != orders.end(); ++it)
     {
-        //Order has been cancelled. Remove it from the resting orders map.
+        //Order has been canceled. Remove it from the resting orders map.
         if(it->type == cancel)
         {
             eraseOrder(it->id);
@@ -31,7 +31,7 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
         highestPriceMap[currentTimestamp] = getHighestPriceOfLimitOrders(currentTimestamp); //highest order price up to now.
     }
 
-    double twap = 0;
+    double twap = 0.0;
     for(std::map<long int, double>::iterator it = highestPriceMap.begin(); it != highestPriceMap.end(); it++)
     {
         long int lastTimestamp = it->first;

@@ -4,7 +4,6 @@
 #include <string>
 #include <typeinfo>
 
-#include "MarketDataProvider.h"
 #include "LimitOrder.h"
 #include "Parser.h"
 #include "Utils.h"
@@ -21,15 +20,12 @@ int main(int argc, char* argv[])
 			return EXIT_FAILURE;
         }
 
-        trading::MarketDataProvider mdp;
-        mdp.readMarketDataFile(argv[1]);
-
+        std::vector<std::string> msgs = trading::readFile(argv[1]);
         std::vector<trading::LimitOrder> limitOrders;
-        while (mdp.hasNextMessage())
+        for(std::vector<std::string>::iterator it = msgs.begin(); it != msgs.end(); ++it)
         {
-            std::string msg (mdp.nextMessage());
-            std::cout << msg << std::endl;
-            trading::LimitOrder order ( trading::Parser::parse(msg) );
+            std::cout << *it << std::endl;
+            trading::LimitOrder order ( trading::Parser::parse(*it) );
             limitOrders.push_back(order);
         }
 

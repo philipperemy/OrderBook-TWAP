@@ -1,11 +1,10 @@
 # depslib dependency file v1.0
-1439771758 source:c:\users\philippe\documents\github\orderbook-twap\main.cpp
+1439772469 source:c:\users\philippe\documents\github\orderbook-twap\main.cpp
 	<iostream>
 	<iomanip>
 	<cassert>
 	<string>
 	<typeinfo>
-	"MarketDataProvider.h"
 	"LimitOrder.h"
 	"Parser.h"
 	"Utils.h"
