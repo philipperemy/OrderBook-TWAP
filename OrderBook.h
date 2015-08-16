@@ -10,8 +10,7 @@ namespace trading
     class OrderBook
     {
         public:
-            double processOrders(std::vector<trading::LimitOrder> orders);
-        protected:
+            double computeTWAP(std::vector<trading::LimitOrder> orders);
         private:
             double getHighestPriceOfLimitOrders(long int maxTimestamp);
             std::map<trading::LimitOrder::Id, trading::LimitOrder*> orderMap_;

@@ -4,7 +4,6 @@
 
 #include <string>
 #include <vector>
-#include "Exceptions.h"
 
 namespace trading
 {

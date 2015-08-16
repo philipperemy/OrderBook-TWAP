@@ -8,7 +8,7 @@
 
 namespace trading {
 
-    std::vector<std::string> readFile2Vector(const std::string& filename);
+    std::vector<std::string> readFile(const std::string& filename);
 
     std::vector<std::string> tokenize(const std::string& str, const char& delimiter);
 

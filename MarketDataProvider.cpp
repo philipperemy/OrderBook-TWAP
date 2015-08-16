@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
-#include <algorithm> // copy
+#include <stdexcept>
 
 #include "MarketDataProvider.h"
 #include "Utils.h"
@@ -10,14 +10,14 @@ void trading::MarketDataProvider::readMarketDataFile(const std::string& filename
 {
 	messages_.clear();
 	filename_ = filename;
-	messages_ = readFile2Vector(filename_);
+	messages_ = readFile(filename_);
 	std::cout << "MarketDataProvider is initialized with " << messages_.size() << " messages" << std::endl;
 	cur_ = trading::MarketDataProvider::messages_.begin();
 }
 
 bool trading::MarketDataProvider::hasNextMessage()
 {
-	return (cur_ != messages_.end());
+	return cur_ != messages_.end();
 }
 
 const std::string& trading::MarketDataProvider::nextMessage()
@@ -30,6 +30,6 @@ const std::string& trading::MarketDataProvider::nextMessage()
 	}
 	else
 	{
-		throw(trading::OutOfBounds());
+		throw(std::out_of_range("MarketDataProvider: out of range"));
 	}
 }

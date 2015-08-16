@@ -1,12 +1,13 @@
 #ifndef PARSER_H_
 #define PARSER_H_
 
+#include <stdlib.h>
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 #include "LimitOrder.h"
-#include "Exceptions.h"
 #include "Utils.h"
 
 namespace trading
@@ -41,7 +42,7 @@ inline trading::LimitOrder trading::Parser::parse(const std::string& msg)
     }
     else
     {
-        throw BadParse();
+        throw std::domain_error("Parser: type is incorrect. Should be I or E.");
     }
 
 	return order;

@@ -1,7 +1,7 @@
 #include "OrderBook.h"
 
 
-double trading::OrderBook::processOrders(std::vector<trading::LimitOrder> orders)
+double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
 {
     std::cout << "______________________" << std::endl;
 

@@ -35,7 +35,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Exceptions.h" />
 		<Unit filename="LimitOrder.h" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="MarketDataProvider.cpp" />
