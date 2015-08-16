@@ -29,7 +29,6 @@ int main(int argc, char* argv[])
         {
             std::string msg (mdp.nextMessage());
             std::cout << msg << std::endl;
-
             trading::LimitOrder order ( trading::Parser::parse(msg) );
             limitOrders.push_back(order);
         }

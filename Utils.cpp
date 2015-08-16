@@ -16,7 +16,10 @@ std::vector<std::string> trading::readFile(const std::string& filename)
 	while (!is.eof())
 	{
 		std::getline(is, str);
-		lines.push_back(str);
+		if(!str.empty())
+        {
+            lines.push_back(str);
+        }
 	}
 	is.close();
 	return lines;

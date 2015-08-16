@@ -1,13 +1,19 @@
 #include "OrderBook.h"
+#include <math.h>
 
 double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
 {
+    if(orders.empty())
+    {
+        return NAN;
+    }
+
     //Fill resting order map first
     for(std::vector<trading::LimitOrder>::iterator it = orders.begin(); it != orders.end(); ++it)
     {
         if(it->type == add)
         {
-            restingOrderMap_[it->id] = &(*it);
+            insertOrder(&(*it));
         }
     }
 
@@ -18,7 +24,7 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
         //Order has been cancelled. Remove it from the resting orders map.
         if(it->type == cancel)
         {
-            restingOrderMap_.erase(it->id);
+            eraseOrder(it->id);
         }
 
         long int currentTimestamp = it->timestamp;
@@ -42,6 +48,16 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
     long int finalTimestamp = orders.back().timestamp;
     twap /= (finalTimestamp - firstTimestamp);
     return twap;
+}
+
+void trading::OrderBook::insertOrder(LimitOrder* order)
+{
+    restingOrderMap_[order->id] = &(*order);
+}
+
+void trading::OrderBook::eraseOrder(std::string id)
+{
+    restingOrderMap_.erase(id);
 }
 
 double trading::OrderBook::getHighestPriceOfLimitOrders(long int maxTimestamp)

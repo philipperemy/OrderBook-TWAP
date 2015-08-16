@@ -1,0 +1,60 @@
+# depslib dependency file v1.0
+1439771758 source:c:\users\philippe\documents\github\orderbook-twap\main.cpp
+	<iostream>
+	<iomanip>
+	<cassert>
+	<string>
+	<typeinfo>
+	"MarketDataProvider.h"
+	"LimitOrder.h"
+	"Parser.h"
+	"Utils.h"
+	"OrderBook.h"
+
+1439770168 c:\users\philippe\documents\github\orderbook-twap\marketdataprovider.h
+	<string>
+	<vector>
+
+1439769858 c:\users\philippe\documents\github\orderbook-twap\limitorder.h
+	<iostream>
+	<string>
+	<sstream>
+
+1439770196 c:\users\philippe\documents\github\orderbook-twap\parser.h
+	<stdlib.h>
+	<sstream>
+	<iostream>
+	<vector>
+	<stdexcept>
+	"LimitOrder.h"
+	"Utils.h"
+
+1439770206 c:\users\philippe\documents\github\orderbook-twap\utils.h
+	<vector>
+	<string>
+	<fstream>
+	<sstream>
+
+1439772134 c:\users\philippe\documents\github\orderbook-twap\orderbook.h
+	"LimitOrder.h"
+	<vector>
+	<map>
+
+1439770142 source:c:\users\philippe\documents\github\orderbook-twap\marketdataprovider.cpp
+	<iostream>
+	<fstream>
+	<iterator>
+	<stdexcept>
+	"MarketDataProvider.h"
+	"Utils.h"
+
+1439772130 source:c:\users\philippe\documents\github\orderbook-twap\orderbook.cpp
+	"OrderBook.h"
+	<math.h>
+
+1439771733 source:c:\users\philippe\documents\github\orderbook-twap\utils.cpp
+	<fstream>
+	<vector>
+	<stdexcept>
+	"Utils.h"
+
