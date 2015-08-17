@@ -37,13 +37,11 @@
 		</Compiler>
 		<Unit filename="LimitOrder.h" />
 		<Unit filename="Main.cpp" />
-		<Unit filename="MarketDataProvider.cpp" />
-		<Unit filename="MarketDataProvider.h" />
+		<Unit filename="OrderBook.cpp" />
+		<Unit filename="OrderBook.h" />
 		<Unit filename="Parser.h" />
 		<Unit filename="Utils.cpp" />
 		<Unit filename="Utils.h" />
-		<Unit filename="OrderBook.h" />
-		<Unit filename="OrderBook.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

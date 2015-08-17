@@ -4,18 +4,12 @@
 double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
 {
     if(orders.empty())
-    {
         return NAN;
-    }
 
     //Fill resting order map first
     for(std::vector<trading::LimitOrder>::iterator it = orders.begin(); it != orders.end(); ++it)
-    {
         if(it->type == add)
-        {
-            insertOrder(&(*it));
-        }
-    }
+            insertOrder(*it);
 
     //Fill Map<Timestamp, Highest Resting Price>
     std::map<long int, double> highestPriceMap;
@@ -23,9 +17,7 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
     {
         //Order has been canceled. Remove it from the resting orders map.
         if(it->type == cancel)
-        {
             eraseOrder(it->id);
-        }
 
         long int currentTimestamp = it->timestamp;
         highestPriceMap[currentTimestamp] = getHighestPriceOfLimitOrders(currentTimestamp); //highest order price up to now.
@@ -50,9 +42,9 @@ double trading::OrderBook::computeTWAP(std::vector<trading::LimitOrder> orders)
     return twap;
 }
 
-void trading::OrderBook::insertOrder(LimitOrder* order)
+void trading::OrderBook::insertOrder(LimitOrder& order)
 {
-    restingOrderMap_[order->id] = &(*order);
+    restingOrderMap_[order.id] = order;
 }
 
 void trading::OrderBook::eraseOrder(std::string id)
@@ -63,13 +55,11 @@ void trading::OrderBook::eraseOrder(std::string id)
 double trading::OrderBook::getHighestPriceOfLimitOrders(long int maxTimestamp)
 {
     double highestPrice = 0;
-    for (std::map<std::string, trading::LimitOrder*>::iterator it = restingOrderMap_.begin(); it != restingOrderMap_.end(); it++)
+    for (std::map<std::string, trading::LimitOrder>::iterator it = restingOrderMap_.begin(); it != restingOrderMap_.end(); it++)
     {
-        double currentPrice = it->second->price;
-        if(currentPrice > highestPrice && it->second->timestamp <= maxTimestamp)
-        {
+        double currentPrice = it->second.price;
+        if(currentPrice > highestPrice && it->second.timestamp <= maxTimestamp)
             highestPrice = currentPrice;
-        }
     }
     return highestPrice;
 }
